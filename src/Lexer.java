@@ -77,30 +77,30 @@ public class Lexer {
                         hasCommentInCurrentLine = true;
                         read();
                         state = State.Double_Slash_Annotation;
-                        tokenCache.offer(Token.DOUBLE_ANNOTATION_SLASH_TOKEN);
-                        return new Token(buffer.toString(), Tag.CODE);
+                        tokenCache.offer(new Token("//"));
+                        return new Token(buffer.toString());
                     } else if (peek == '*') {
                         hasCommentInCurrentLine = true;
                         read();
                         state = State.Star_Annotation;
-                        tokenCache.offer(Token.LEFT_STAR_ANNOTATION_TOKEN);
-                        return new Token(buffer.toString(), Tag.CODE);
+                        tokenCache.offer(new Token("/*"));
+                        return new Token(buffer.toString());
                     }
                     throw new LexicalException("语法错误:/的后面必须为 /或者' :at line " + currentLine);
                 } else if (peek == '\"') {
                     state = State.String;
                     read();
-                    tokenCache.offer(Token.DOUBLE_QUOTATION_TOKEN);
-                    return new Token(buffer.toString(), Tag.CODE);
+                    tokenCache.offer(new Token("\""));
+                    return new Token(buffer.toString());
                 } else if (peek == '\'') {
                     state = State.Char;
                     read();
-                    tokenCache.offer(Token.SINGLE_QUOTATION_TOKEN);
-                    return new Token(buffer.toString(), Tag.CODE);
+                    tokenCache.offer(new Token("'"));
+                    return new Token(buffer.toString());
                 } else if (peek == END_CHAR) {
                     state = State.Eof;
                     tokenCache.offer(Token.EOF_TOKEN);
-                    return new Token(buffer.toString(), Tag.CODE);
+                    return new Token(buffer.toString());
                 } else {
                     if (peek == AnnotationFileUtil.NEW_LINE) {
                         countCurrentByNewLine();
@@ -143,8 +143,8 @@ public class Lexer {
                     } else if (peek == '/') {
                         read();
                         state = State.Normal;
-                        tokenCache.offer(Token.RIGHT_STAR_ANNOTATION_TOKEN);
-                        return new Token(buffer.toString(), Tag.ANNOTATION);
+                        tokenCache.offer(new Token("*/"));
+                        return new Token(buffer.toString());
                     } else {
                         if (peek == AnnotationFileUtil.NEW_LINE) {
                             countCurrentByNewLine();
@@ -165,7 +165,7 @@ public class Lexer {
             while (true) {
                 if (peek == AnnotationFileUtil.NEW_LINE) {
                     state = State.Normal;
-                    return new Token(buffer.toString(), Tag.ANNOTATION);
+                    return new Token(buffer.toString());
                 } else {
                     buffer.append(peek);
                     read();
@@ -179,8 +179,8 @@ public class Lexer {
                     if (peek == '\"') {
                         state = State.Normal;
                         read();
-                        tokenCache.offer(Token.DOUBLE_QUOTATION_TOKEN);
-                        return new Token(buffer.toString(), Tag.String);
+                        tokenCache.offer(new Token("\""));
+                        return new Token(buffer.toString());
                     } else if (peek == '\\') {
                         state = State.TransferredString;
                         read();
@@ -202,8 +202,8 @@ public class Lexer {
                     if (peek == '\'') {
                         state = State.Normal;
                         read();
-                        tokenCache.offer(Token.SINGLE_QUOTATION_TOKEN);
-                        return new Token(buffer.toString(), Tag.Char);
+                        tokenCache.offer(new Token("'"));
+                        return new Token(buffer.toString());
                     } else if (peek == '\\') {
                         state = State.TransferredChar;
                         buffer.append("\\");
