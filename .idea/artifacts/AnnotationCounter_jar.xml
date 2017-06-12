@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AnnotationCounter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AnnotationCounter_jar</output-path>
+    <root id="archive" name="AnnotationCounter.jar">
+      <element id="module-output" name="AnnotationCounter" />
+    </root>
+  </artifact>
+</component>
