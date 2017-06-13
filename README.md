@@ -12,3 +12,6 @@ Java		jdk:1.8.0_111
 java -jar AnnotationCounter.jar E:\c++project
 ```
 
+c++注释的状态机:
+
+![AnnotationCounterStateMachine](out/img/AnnotationCounterStateMachine.png)
